@@ -251,7 +251,7 @@ public class Setting {
     }
 
     public static float getSpeed() {
-        return Math.min(Math.max(Prefers.getFloat("speed", 3), 2), 5);
+        return Math.min(Math.max(Prefers.getFloat("speed", 2), 2), 5);
     }
 
     public static void putSpeed(float speed) {
