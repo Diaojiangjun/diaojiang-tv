@@ -1041,18 +1041,20 @@ public class VideoActivity extends PlaybackActivity implements Clock.Callback, C
         }
     }
 
-    private void checkHistory(Vod item) {
+        private void checkHistory(Vod item) {
         mHistory = History.find(getHistoryKey());
         mHistory = mHistory == null ? createHistory(item) : mHistory;
         if (!TextUtils.isEmpty(getMark())) mHistory.setVodRemarks(getMark());
         if (Setting.isIncognito() && mHistory.getKey().equals(getHistoryKey())) mHistory.delete();
         mBinding.control.action.opening.setText(mHistory.getOpening() <= 0 ? getString(R.string.play_op) : Util.timeMs(mHistory.getOpening()));
         mBinding.control.action.ending.setText(mHistory.getEnding() <= 0 ? getString(R.string.play_ed) : Util.timeMs(mHistory.getEnding()));
-        mBinding.control.action.speed.setText(player().setSpeed(mHistory.getSpeed()));
+        mHistory.setSpeed(1.0f);
+        mBinding.control.action.speed.setText(player().setSpeed(1.0f));
         mHistory.setVodName(item.getName());
         setArtwork(item.getPic());
         setScale(getScale());
     }
+
 
     private History createHistory(Vod item) {
         History history = new History();

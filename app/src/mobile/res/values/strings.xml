@@ -60,5 +60,19 @@
     </string-array>
 
     <string name="fullscreen">Fullscreen</string>
-
+    <!-- Disclaimer -->
+    <string name="disclaimer_title">Disclaimer</string>
+    <string name="disclaimer_agree">Agree</string>
+    <string name="disclaimer_disagree">Decline</string>
+    <string name="disclaimer_content"><![CDATA[
+    <font color="#2196F3"><b>Welcome to this application!</b></font><br/><br/>
+    Before using this application, please read and understand the following statements carefully:<br/><br/>
+    <font color="#2196F3"><b>1.</b></font> This application is a <font color="#FF6B35"><b>video aggregation search tool</b></font>. All content comes from publicly available <font color="#FF6B35"><b>third-party sites</b></font> on the Internet. This application does not store, produce, or upload any video content.<br/><br/>
+    <font color="#2196F3"><b>2.</b></font> This application only provides technical search services and is not responsible for the legality, accuracy, completeness, or quality of any <font color="#FF6B35"><b>third-party content</b></font>. Users should make their own judgments and bear the <font color="#FF6B35"><b>risks</b></font> of use.<br/><br/>
+    <font color="#2196F3"><b>3.</b></font> All content in this application points to third-party sources, and the copyright belongs to the original authors or <font color="#FF6B35"><b>rights holders</b></font>. If you believe that certain content infringes upon your legitimate rights, please contact the relevant content provider directly for <font color="#FF6B35"><b>removal</b></font>.<br/><br/>
+    <font color="#2196F3"><b>4.</b></font> Users must comply with relevant <font color="#FF6B35"><b>laws and regulations</b></font> when using this application. You may not use this application to access, distribute, or download any <font color="#FF6B35"><b>illegal</b></font>, <font color="#FF6B35"><b>non-compliant</b></font>, or <font color="#FF6B35"><b>infringing</b></font> content. <font color="#FF6B35"><b>Legal liabilities</b></font> arising from personal user actions shall be borne by the user.<br/><br/>
+    <font color="#2196F3"><b>5.</b></font> Due to changes in third-party sites, technical issues, network failures, or requests from rights holders, some functions may become abnormal or unavailable. We sincerely apologize for this and will do our best to improve.<br/><br/>
+    <font color="#2196F3"><b>6.</b></font> This disclaimer may be updated from time to time, and the updated statement will take effect once published. Please check regularly to stay informed of the latest terms.<br/><br/>
+    Continuing to use this application means that you have read, understood, and agreed to accept all the contents of this disclaimer. If you do not agree, please <font color="#F44336"><b>stop using and uninstall this application immediately</b></font>.
+    ]]></string>
 </resources>

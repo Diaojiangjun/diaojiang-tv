@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp"
+    app:strokeWidth="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+        <!-- Header with gradient background -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_gradient_primary"
+            android:paddingTop="48dp"
+            android:paddingBottom="24dp">
+
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_shield"
+                app:tint="@color/white" />
+        </FrameLayout>
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/disclaimer_title"
+            android:textColor="@color/blue_700"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <!-- Divider -->
+        <View
+            android:layout_width="60dp"
+            android:layout_height="3dp"
+            android:layout_marginTop="12dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/bg_accent_line" />
+
+        <!-- Content with HTML formatting -->
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp">
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="8dp"
+                android:textColor="@color/black_80"
+                android:textSize="15sp" />
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_disagree"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="@string/disclaimer_disagree"
+                android:textSize="16sp"
+                app:cornerRadius="12dp"
+                app:strokeWidth="2dp"
+                app:strokeColor="@color/red_500"
+                android:textColor="@color/red_500" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_agree"
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="@string/disclaimer_agree"
+                android:textSize="16sp"
+                app:cornerRadius="12dp"
+                android:backgroundTint="@color/green_500"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

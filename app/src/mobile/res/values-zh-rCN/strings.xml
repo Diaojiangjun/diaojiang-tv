@@ -59,5 +59,19 @@
         <item>画中画</item>
     </string-array>
     <string name="fullscreen">全屏</string>
-
+    <!-- Disclaimer -->
+    <string name="disclaimer_title">免责声明</string>
+    <string name="disclaimer_agree">同意</string>
+    <string name="disclaimer_disagree">拒绝</string>
+    <string name="disclaimer_content"><![CDATA[
+    <font color="#2196F3"><b>欢迎使用本应用！</b></font><br/><br/>
+    在使用本应用之前，请您仔细阅读并理解以下声明：<br/><br/>
+    <font color="#2196F3"><b>1.</b></font> 本应用是一款<font color="#FF6B35"><b>视频聚合搜索工具</b></font>，所有内容均来自互联网公开的<font color="#FF6B35"><b>第三方站点</b></font>，本应用不存储、制作或上传任何视频内容。<br/><br/>
+    <font color="#2196F3"><b>2.</b></font> 本应用仅提供技术检索服务，不对任何<font color="#FF6B35"><b>第三方内容</b></font>的合法性、准确性、完整性及质量负责。用户应自行判断并承担使用<font color="#FF6B35"><b>风险</b></font>。<br/><br/>
+    <font color="#2196F3"><b>3.</b></font> 本应用中所有内容均指向第三方来源，其版权归原作者或<font color="#FF6B35"><b>版权方</b></font>所有。如您认为某些内容侵犯了您的合法权益，请直接联系相关内容提供方进行<font color="#FF6B35"><b>删除</b></font>处理。<br/><br/>
+    <font color="#2196F3"><b>4.</b></font> 用户使用本应用时必须遵守相关<font color="#FF6B35"><b>法律法规</b></font>，不得利用本应用访问、传播或下载任何<font color="#FF6B35"><b>违法</b></font>、<font color="#FF6B35"><b>违规</b></font>或<font color="#FF6B35"><b>侵权</b></font>的内容。因用户个人行为导致的<font color="#FF6B35"><b>法律责任</b></font>由用户自行承担。<br/><br/>
+    <font color="#2196F3"><b>5.</b></font> 因第三方站点变更、技术问题、网络故障或版权方要求等原因，可能导致部分功能异常或无法使用，对此我们深表歉意并将尽力改进。<br/><br/>
+    <font color="#2196F3"><b>6.</b></font> 本免责声明可能会不定期更新，更新后的声明一旦公布即生效。请您定期查阅以了解最新条款。<br/><br/>
+    继续使用本应用即表示您已阅读、理解并同意接受本免责声明的全部内容。如您不同意，请<font color="#F44336"><b>立即停止使用并卸载本应用</b></font>。
+    ]]></string>
 </resources>

@@ -5,11 +5,15 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.pm.ShortcutInfoCompat;
 import androidx.core.content.pm.ShortcutManagerCompat;
 import androidx.core.graphics.drawable.IconCompat;
@@ -19,6 +23,7 @@ import androidx.viewbinding.ViewBinding;
 
 import com.fongmi.android.tv.App;
 import com.fongmi.android.tv.R;
+import com.fongmi.android.tv.Setting;
 import com.fongmi.android.tv.Updater;
 import com.fongmi.android.tv.api.config.LiveConfig;
 import com.fongmi.android.tv.api.config.VodConfig;
@@ -76,6 +81,7 @@ public class HomeActivity extends BaseActivity implements NavigationBarView.OnIt
     @Override
     protected void initView(Bundle savedInstanceState) {
         orientation = getResources().getConfiguration().orientation;
+        checkDisclaimer();
         initFragment(savedInstanceState);
         Updater.create().start(this);
         initConfig();
@@ -123,6 +129,43 @@ public class HomeActivity extends BaseActivity implements NavigationBarView.OnIt
         VodConfig.get().init().load(getCallback());
         LiveConfig.get().init().load();
         WallConfig.get().init();
+    }
+
+    private void checkDisclaimer() {
+        if (!Setting.isDisclaimerAccepted()) {
+            showDisclaimerDialog();
+        }
+    }
+
+    private void showDisclaimerDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.Theme_App);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_disclaimer, null);
+        builder.setView(dialogView);
+        
+        AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        
+        Button btnAgree = dialogView.findViewById(R.id.btn_agree);
+        Button btnDisagree = dialogView.findViewById(R.id.btn_disagree);
+        TextView tvTitle = dialogView.findViewById(R.id.tv_title);
+        TextView tvContent = dialogView.findViewById(R.id.tv_content);
+        
+        // Set content with HTML formatting
+        tvContent.setText(Html.fromHtml(getString(R.string.disclaimer_content), Html.FROM_HTML_MODE_LEGACY));
+        
+        btnAgree.setOnClickListener(v -> {
+            Setting.putDisclaimerAccepted(true);
+            dialog.dismiss();
+        });
+        
+        btnDisagree.setOnClickListener(v -> {
+            dialog.dismiss();
+            finish();
+            System.exit(0);
+        });
+        
+        dialog.show();
     }
 
     private Callback getCallback() {

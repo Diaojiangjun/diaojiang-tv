@@ -60,5 +60,20 @@
     </string-array>
 
     <string name="fullscreen">全螢幕</string>
+    <!-- Disclaimer -->
+    <string name="disclaimer_title">免責聲明</string>
+    <string name="disclaimer_agree">同意</string>
+    <string name="disclaimer_disagree">不同意</string>
+    <string name="disclaimer_content"><![CDATA[
+     <font color="#2196F3"><b>歡迎使用本應用！</b></font><br/><br/>
+     在使用本應用之前，請您仔細閱讀並理解以下聲明：<br/><br/>
+     <font color="#2196F3"><b>1.</b></font> 本應用是一款<font color="#FF6B35"><b>視頻聚合搜索工具</b></font>，所有內容均來自互聯網公開的<font color="#FF6B35"><b>第三方站點</b></font>，本應用不存儲、製作或上傳任何視頻內容。<br/><br/>
+     <font color="#2196F3"><b>2.</b></font> 本應用僅提供技術檢索服務，不對任何<font color="#FF6B35"><b>第三方內容</b></font>的合法性、準確性、完整性及質量負責。用戶應自行判斷並承擔使用<font color="#FF6B35"><b>風險</b></font>。<br/><br/>
+     <font color="#2196F3"><b>3.</b></font> 本應用中所有內容均指向第三方來源，其版權歸原作者或<font color="#FF6B35"><b>版權方</b></font>所有。如您認為某些內容侵犯了您的合法權益，請直接聯繫相關內容提供方進行<font color="#FF6B35"><b>刪除</b></font>處理。<br/><br/>
+     <font color="#2196F3"><b>4.</b></font> 用戶使用本應用時必須遵守相關<font color="#FF6B35"><b>法律法規</b></font>，不得利用本應用訪問、傳播或下載任何<font color="#FF6B35"><b>違法</b></font>、<font color="#FF6B35"><b>違規</b></font>或<font color="#FF6B35"><b>侵權</b></font>的內容。因用戶個人行為導致的<font color="#FF6B35"><b>法律責任</b></font>由用戶自行承擔。<br/><br/>
+     <font color="#2196F3"><b>5.</b></font> 因第三方站點變更、技術問題、網絡故障或版權方要求等原因，可能導致部分功能異常或無法使用，對此我們深表歉意並將盡力改進。<br/><br/>
+     <font color="#2196F3"><b>6.</b></font> 本免責聲明可能會不定期更新，更新後的聲明一旦公佈即生效。請您定期查閱以了解最新條款。<br/><br/>
+     繼續使用本應用即表示您已閱讀、理解並同意接受本免責聲明的全部內容。如您不同意，請<font color="#F44336"><b>立即停止使用並卸載本應用</b></font>。
+    ]]></string>
 
 </resources>

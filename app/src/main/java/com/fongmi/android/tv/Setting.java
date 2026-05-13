@@ -251,7 +251,7 @@ public class Setting {
     }
 
     public static float getSpeed() {
-        return Math.min(Math.max(Prefers.getFloat("speed", 3), 2), 5);
+        return Math.min(Math.max(Prefers.getFloat("speed", 2), 2), 5);
     }
 
     public static void putSpeed(float speed) {
@@ -292,5 +292,13 @@ public class Setting {
 
     public static boolean hasFileManager() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && (new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, Uri.parse("package:" + App.get().getPackageName())).resolveActivity(App.get().getPackageManager()) != null || new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION).resolveActivity(App.get().getPackageManager()) != null);
+    }
+
+    public static boolean isDisclaimerAccepted() {
+        return Prefers.getBoolean("disclaimer_accepted", false);
+    }
+
+    public static void putDisclaimerAccepted(boolean accepted) {
+        Prefers.put("disclaimer_accepted", accepted);
     }
 }
