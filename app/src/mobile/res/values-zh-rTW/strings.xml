@@ -59,4 +59,6 @@
         <item>子母畫面</item>
     </string-array>
 
+    <string name="fullscreen">全螢幕</string>
+
 </resources>

@@ -58,5 +58,6 @@
         <item>开启</item>
         <item>画中画</item>
     </string-array>
+    <string name="fullscreen">全屏</string>
 
 </resources>

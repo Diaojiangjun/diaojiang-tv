@@ -332,6 +332,7 @@ public class VideoActivity extends PlaybackActivity implements Clock.Callback, C
         mBinding.control.right.lock.setOnClickListener(view -> onLock());
         mBinding.control.right.rotate.setOnClickListener(view -> onRotate());
         mBinding.control.danmaku.setOnClickListener(view -> onDanmakuShow());
+        mBinding.control.fullscreen.setOnClickListener(view -> onFullscreen());
         mBinding.control.action.text.setOnClickListener(this::onTrack);
         mBinding.control.action.audio.setOnClickListener(this::onTrack);
         mBinding.control.action.video.setOnClickListener(this::onTrack);
@@ -727,6 +728,15 @@ public class VideoActivity extends PlaybackActivity implements Clock.Callback, C
         setRequestedOrientation(ResUtil.isLand(this) ? ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
     }
 
+    private void onFullscreen() {
+        setR1Callback();
+        if (isFullscreen()) {
+            exitFullscreen();
+        } else {
+            enterFullscreen();
+        }
+    }
+
     private void onTrack(View view) {
         TrackDialog.create().type(Integer.parseInt(view.getTag().toString())).player(player()).show(this);
         hideControl();
@@ -884,6 +894,7 @@ public class VideoActivity extends PlaybackActivity implements Clock.Callback, C
         mKeyDown.resetScale();
         App.post(mR3, 2000);
         setDanmakuSize();
+        checkFullscreenImg();
         hideControl();
     }
 
@@ -899,6 +910,7 @@ public class VideoActivity extends PlaybackActivity implements Clock.Callback, C
         App.post(mR3, 2000);
         setRotate(false);
         setDanmakuSize();
+        checkFullscreenImg();
         hideControl();
     }
 
@@ -1083,6 +1095,10 @@ public class VideoActivity extends PlaybackActivity implements Clock.Callback, C
 
     private void checkLockImg() {
         mBinding.control.right.lock.setImageResource(isLock() ? R.drawable.ic_control_lock_on : R.drawable.ic_control_lock_off);
+    }
+
+    private void checkFullscreenImg() {
+        mBinding.control.fullscreen.setImageResource(isFullscreen() ? R.drawable.ic_control_fullscreen_exit : R.drawable.ic_control_fullscreen);
     }
 
     private void checkDanmakuImg() {
@@ -1569,9 +1585,7 @@ public class VideoActivity extends PlaybackActivity implements Clock.Callback, C
     public void onDoubleTap() {
         if (isLock())
             return;
-        if (!isFullscreen()) {
-            enterFullscreen();
-        } else if (player().isPlaying()) {
+        if (player().isPlaying()) {
             showControl();
             onPaused();
         } else {

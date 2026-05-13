@@ -59,4 +59,6 @@
         <item>PiP</item>
     </string-array>
 
+    <string name="fullscreen">Fullscreen</string>
+
 </resources>
