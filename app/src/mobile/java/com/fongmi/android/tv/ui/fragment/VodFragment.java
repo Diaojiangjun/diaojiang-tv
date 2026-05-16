@@ -20,6 +20,8 @@ import androidx.viewbinding.ViewBinding;
 import androidx.viewpager.widget.ViewPager;
 
 import com.fongmi.android.tv.R;
+import com.fongmi.android.tv.ads.AdConfig;
+import com.fongmi.android.tv.ads.adsterra.AdsterraSmartlinkAd;
 import com.fongmi.android.tv.api.config.VodConfig;
 import com.fongmi.android.tv.bean.Class;
 import com.fongmi.android.tv.bean.Config;
@@ -66,6 +68,7 @@ public class VodFragment extends BaseFragment implements ConfigCallback, SiteCal
     private SiteViewModel mViewModel;
     private TypeAdapter mAdapter;
     private Result mResult;
+    private View adCard;
 
     public static VodFragment newInstance() {
         return new VodFragment();
@@ -97,6 +100,7 @@ public class VodFragment extends BaseFragment implements ConfigCallback, SiteCal
         showProgress();
         setTitle();
         setLogo();
+        setupAdCard();
     }
 
     @Override
@@ -229,6 +233,46 @@ public class VodFragment extends BaseFragment implements ConfigCallback, SiteCal
 
     private void setLogo() {
         ImgUtil.logo(mBinding.logo);
+    }
+
+    private void setupAdCard() {
+        // 测试阶段：始终显示广告卡片
+        // 正式使用时可以恢复以下判断逻辑
+        /*
+        AdConfig config = new AdConfig();
+        config.init(requireContext());
+        
+        if (!config.shouldShowAd()) {
+            return;
+        }
+        */
+
+        LayoutInflater inflater = LayoutInflater.from(requireContext());
+        adCard = inflater.inflate(R.layout.view_ad_card, mBinding.appBar, false);
+        
+        View btnSupport = adCard.findViewById(R.id.btnSupport);
+        btnSupport.setOnClickListener(v -> openAd());
+        
+        mBinding.appBar.addView(adCard, 1);
+        adCard.setVisibility(View.VISIBLE);
+    }
+
+    private void openAd() {
+        AdsterraSmartlinkAd ad = new AdsterraSmartlinkAd(requireActivity());
+        ad.loadAd(null);
+        ad.showAd();
+        
+        // 测试阶段：不记录点击，保持卡片一直显示
+        // 正式使用时可以恢复以下代码
+
+        AdConfig config = new AdConfig();
+        config.init(requireContext());
+        config.recordAdClick();
+        
+        if (adCard != null) {
+            adCard.setVisibility(View.GONE);
+        }
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

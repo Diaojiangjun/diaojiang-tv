@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.text.style.ClickableSpan;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,8 @@ import com.fongmi.android.tv.App;
 import com.fongmi.android.tv.Constant;
 import com.fongmi.android.tv.R;
 import com.fongmi.android.tv.Setting;
+import com.fongmi.android.tv.ads.AdConfig;
+import com.fongmi.android.tv.ads.adsterra.AdsterraSmartlinkAd;
 import com.fongmi.android.tv.api.SiteApi;
 import com.fongmi.android.tv.api.config.VodConfig;
 import com.fongmi.android.tv.bean.CastVideo;
@@ -123,6 +126,7 @@ public class VideoActivity extends PlaybackActivity implements Clock.Callback, C
     private CustomKeyDown mKeyDown;
     private List<String> mBroken;
     private History mHistory;
+    private View adCard;
     private boolean fullscreen;
     private boolean initAuto;
     private boolean autoMode;
@@ -307,6 +311,7 @@ public class VideoActivity extends PlaybackActivity implements Clock.Callback, C
         showProgress();
         showDanmaku();
         setAnimator();
+        setupAdCard();
     }
 
     @Override
@@ -500,6 +505,51 @@ public class VideoActivity extends PlaybackActivity implements Clock.Callback, C
         setText(mBinding.content, 0, item.getContent());
         setText(mBinding.remark, 0, item.getRemarks());
         setOther(mBinding.other, item);
+    }
+
+    private void setupAdCard() {
+        // 测试阶段：始终显示广告卡片
+        // 正式使用时可以恢复以下判断逻辑
+
+        AdConfig config = new AdConfig();
+        config.init(this);
+        
+        if (!config.shouldShowAd()) {
+            return;
+        }
+
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        adCard = inflater.inflate(R.layout.view_ad_card, mBinding.scroll, false);
+        
+        View btnSupport = adCard.findViewById(R.id.btnSupport);
+        btnSupport.setOnClickListener(v -> openAd());
+        
+        // 在视频信息区域的最顶部插入广告卡片（视频播放器下方）
+        // 找到包含所有视频信息的父容器（LinearLayoutCompat）
+        View nameView = findViewById(R.id.name);
+        if (nameView != null && nameView.getParent() instanceof ViewGroup) {
+            ViewGroup parent = (ViewGroup) nameView.getParent();
+            // 在第一个子元素（name）之前插入广告卡片
+            parent.addView(adCard, 0);
+            adCard.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void openAd() {
+        AdsterraSmartlinkAd ad = new AdsterraSmartlinkAd(this);
+        ad.loadAd(null);
+        ad.showAd();
+        
+        // 记录点击，全局生效（首页和详情页共享）
+        AdConfig config = new AdConfig();
+        config.init(this);
+        config.recordAdClick();
+        
+        // 隐藏当前页面的广告卡片
+        if (adCard != null) {
+            adCard.setVisibility(View.GONE);
+        }
     }
 
     private void setText(TextView view, int resId, String text) {
@@ -1690,6 +1740,13 @@ public class VideoActivity extends PlaybackActivity implements Clock.Callback, C
         mViewModel.getResult().removeObserver(mObserveDetail);
         mViewModel.getPlayer().removeObserver(mObservePlayer);
         mViewModel.getSearch().removeObserver(mObserveSearch);
+        
+        // 清理广告卡片
+        if (adCard != null && adCard.getParent() instanceof ViewGroup) {
+            ((ViewGroup) adCard.getParent()).removeView(adCard);
+            adCard = null;
+        }
+        
         super.onDestroy();
     }
 }

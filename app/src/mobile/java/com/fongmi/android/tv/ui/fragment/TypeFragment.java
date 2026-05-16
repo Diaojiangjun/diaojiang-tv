@@ -2,6 +2,7 @@ package com.fongmi.android.tv.ui.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -135,6 +136,7 @@ public class TypeFragment extends BaseFragment implements CustomScroller.Callbac
     private void getVideo() {
         mScroller.reset();
         mAdapter.clear(() -> {
+            mAdapter.hideFooter();
             if (!mBinding.swipeLayout.isRefreshing()) mBinding.progressLayout.showProgress();
             if (isHome()) setAdapter(getParent().getResult());
             else getVideo(getTypeId(), "1");
@@ -152,19 +154,34 @@ public class TypeFragment extends BaseFragment implements CustomScroller.Callbac
         mBinding.swipeLayout.setRefreshing(false);
         mScroller.endLoading(result);
         if (size > 0) addVideo(result);
+        
+        // 加载完成后的Footer处理
+        // 注意：不要显示LOADING Footer，因为会启动超时定时器，5秒后自动变成NO_MORE
+        if (first) {
+            if (size == 0) {
+                // 第一页没有数据，显示无更多Footer
+                mAdapter.showNoMoreFooter();
+            } else {
+                // 第一页有数据，隐藏Footer（等待用户滚动到底部时再显示LOADING）
+                mAdapter.hideFooter();
+            }
+        } else {
+            // 加载更多完成后的处理
+            if (size == 0) {
+                // 没有更多数据，显示无更多Footer
+                mAdapter.showNoMoreFooter();
+            } else {
+                // 还有更多数据，隐藏Footer（等待下次滚动到底部时再显示LOADING）
+                mAdapter.hideFooter();
+            }
+        }
     }
 
     private void addVideo(Result result) {
         Style style = result.getVod().getStyle(getStyle());
         if (!style.equals(mAdapter.getStyle())) setStyle(style);
-        mAdapter.addAll(result.getList(), this::checkMore);
-    }
-
-    private void checkMore() {
-        mBinding.recycler.post(() -> {
-            if (mScroller.isDisable() || mBinding.recycler.canScrollVertically(1) || mBinding.recycler.getScrollState() != 0 || isHome()) return;
-            getVideo(getTypeId(), String.valueOf(mScroller.addPage()));
-        });
+        // 不再使用 checkMore 回调，只在用户滚动到底部时通过 CustomScroller 触发加载
+        mAdapter.addAll(result.getList());
     }
 
     public void scrollToTop() {
@@ -179,6 +196,9 @@ public class TypeFragment extends BaseFragment implements CustomScroller.Callbac
 
     @Override
     public void onRefresh() {
+        // 刷新时重置所有状态
+        mScroller.reset();
+        mAdapter.hideFooter();
         if (isHome()) getHome();
         else getVideo();
     }
@@ -186,7 +206,18 @@ public class TypeFragment extends BaseFragment implements CustomScroller.Callbac
     @Override
     public void onLoadMore(String page) {
         if (isHome()) return;
+        
+        // 防止重复加载：检查当前Footer状态
+        VodAdapter.FooterState currentState = mAdapter.getFooterState();
+        if (currentState == VodAdapter.FooterState.LOADING) {
+            return; // 已经在加载中，不重复请求
+        }
+        if (currentState == VodAdapter.FooterState.NO_MORE) {
+            return; // 已经没有更多数据，不再加载
+        }
+        
         mScroller.setLoading(true);
+        mAdapter.showLoadingFooter();
         getVideo(getTypeId(), page);
     }
 
