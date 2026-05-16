@@ -33,6 +33,7 @@ import com.fongmi.android.tv.impl.SiteCallback;
 import com.fongmi.android.tv.ui.activity.HomeActivity;
 import com.fongmi.android.tv.ui.base.BaseFragment;
 import com.fongmi.android.tv.ui.dialog.ConfigDialog;
+import com.fongmi.android.tv.ui.dialog.HelpDialog;
 import com.fongmi.android.tv.ui.dialog.HistoryDialog;
 import com.fongmi.android.tv.ui.dialog.LiveDialog;
 import com.fongmi.android.tv.ui.dialog.RestoreDialog;
@@ -125,6 +126,7 @@ public class SettingFragment extends BaseFragment implements ConfigCallback, Sit
         mBinding.player.setOnClickListener(this::onPlayer);
         mBinding.restore.setOnClickListener(this::onRestore);
         mBinding.version.setOnClickListener(this::onVersion);
+        mBinding.help.setOnClickListener(this::onHelp);
         mBinding.vod.setOnLongClickListener(this::onVodEdit);
         mBinding.vodHome.setOnClickListener(this::onVodHome);
         mBinding.live.setOnLongClickListener(this::onLiveEdit);
@@ -242,6 +244,10 @@ public class SettingFragment extends BaseFragment implements ConfigCallback, Sit
 
     private void onVersion(View view) {
         Updater.create().force().start(requireActivity());
+    }
+
+    private void onHelp(View view) {
+        HelpDialog.create().show(this);
     }
 
     private void setWallDefault(View view) {
