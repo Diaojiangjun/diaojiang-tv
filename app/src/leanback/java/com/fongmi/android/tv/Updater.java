@@ -120,6 +120,7 @@ public class Updater implements Download.Callback {
 
     @Override
     public void success(File file) {
+        android.util.Log.d("Updater", "APK downloaded: " + file.getAbsolutePath() + ", size: " + file.length() + " bytes");
         FileUtil.openFile(file);
         dismiss();
     }

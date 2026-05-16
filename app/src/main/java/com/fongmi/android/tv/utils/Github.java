@@ -2,7 +2,8 @@ package com.fongmi.android.tv.utils;
 
 public class Github {
 
-    public static final String URL = "https://cdn.jsdelivr.net/gh/HAOyangcl/diaojiangjun@main";
+    // 使用GitHub Raw URL替代jsDelivr CDN（突破50MB限制）
+    public static final String URL = "https://raw.githubusercontent.com/HAOyangcl/diaojiangjun/main";
 
     private static String getUrl(String name) {
         return URL + "/apk/" + name;

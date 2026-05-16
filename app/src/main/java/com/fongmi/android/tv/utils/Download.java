@@ -56,7 +56,21 @@ public class Download {
 
     private void doInBackground() {
         try (Response res = OkHttp.newCall(url, tag).execute()) {
-            download(res.body().byteStream(), getLength(res));
+            if (!res.isSuccessful()) {
+                throw new IOException("HTTP " + res.code());
+            }
+            double contentLength = getLength(res);
+            download(res.body().byteStream(), contentLength);
+            // Verify downloaded file
+            if (contentLength > 0) {
+                long fileSize = file.length();
+                if (fileSize < contentLength * 0.95) {
+                    throw new IOException("Download incomplete: expected " + contentLength + " bytes, got " + fileSize);
+                }
+            }
+            if (file.length() < 1024 * 1024) {
+                throw new IOException("APK file too small, download may be corrupted");
+            }
             if (callback != null) App.post(() -> callback.success(file));
         } catch (Exception e) {
             Path.clear(file);

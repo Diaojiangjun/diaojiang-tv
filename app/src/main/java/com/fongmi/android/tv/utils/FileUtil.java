@@ -37,11 +37,49 @@ public class FileUtil {
     }
 
     public static void openFile(File file) {
+        if (file == null || !file.exists()) {
+            Notify.show(R.string.update_failed);
+            return;
+        }
+        
+        // Validate APK file
+        if (file.length() < 1024 * 1024) {
+            Notify.show("APK文件异常，请重试");
+            file.delete();
+            return;
+        }
+        
+        // Check if file is a valid APK (magic number check)
+        try (java.io.RandomAccessFile raf = new java.io.RandomAccessFile(file, "r")) {
+            if (raf.length() < 4) {
+                Notify.show("APK文件损坏，请重试");
+                file.delete();
+                return;
+            }
+            byte[] header = new byte[4];
+            raf.read(header);
+            // APK files are ZIP files, which start with PK (0x50, 0x4B)
+            if (header[0] != 0x50 || header[1] != 0x4B) {
+                Notify.show("下载的文件不是有效的APK，请重试");
+                file.delete();
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Notify.show("APK文件验证失败，请重试");
+            return;
+        }
+        
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setDataAndType(getShareUri(file), FileUtil.getMimeType(file.getName()));
-        App.get().startActivity(intent);
+        try {
+            App.get().startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Notify.show("无法启动安装程序，请检查系统设置");
+        }
     }
 
     public static void gzipCompress(File target) {
